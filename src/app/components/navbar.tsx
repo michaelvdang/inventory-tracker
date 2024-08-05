@@ -32,7 +32,7 @@ const Navbar = ({ showOthers, setShowOthers }: { showOthers: boolean, setShowOth
     })
 
     return () => unsubscribe();
-  }, [])
+  })
   
   return (
     <div
