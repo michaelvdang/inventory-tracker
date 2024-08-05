@@ -39,3 +39,14 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Firebase config in .env.local file
 
 Values are taken from firebase console in Project Settings
+
+## Other project ideas
+
+
+Bonus: Take images with mobile or browser camera and upload to Firebase
+
+Bonus: Use GPT Vision API or other LLMs to classify images and then update to Firebase
+
+Bonus: Use GCP Vertex AI and AutoML to classify 4-5 images of items near you and update Firebase
+
+Bonus: Add a recipe suggestion feature based on pantry contents using the OpenAI API or OpenRouter API
