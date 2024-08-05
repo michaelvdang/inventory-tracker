@@ -4,7 +4,7 @@ import GoogleButton from 'react-google-button'
 import { signInWithGoogle } from '../utils/auth'
 import { useUserContext } from '../MyContext'
 
-const login = () => {
+const Login = () => {
   const {user, setUser} = useUserContext();
 
   useEffect(() => {
@@ -25,4 +25,4 @@ const login = () => {
   )
 }
 
-export default login
+export default Login
