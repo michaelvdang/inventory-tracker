@@ -27,6 +27,8 @@ export default function Home() {
   // ]
   const { user, setUser } = useUserContext();
   // const [user, setUser] = useState(JSON.parse(localStorage.getItem("user") || "{}"));
+  const [searchQuery, setSearchQuery] = useState('');
+  const [tableData, setTableData] = useState<InventoryItemType[]>([]);
   const [showOthers, setShowOthers] = useState(false);
   const [inventory, setInventory] = useState<InventoryItemType[]>([]);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -37,6 +39,18 @@ export default function Home() {
     price: ''
   })
   const router = useRouter();
+
+  const filteredItems = inventory.filter((item) =>
+    item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  useEffect(() => {
+    if (searchQuery) {
+      setTableData(filteredItems);
+    } else {
+      setTableData(inventory);
+    }
+  }, [searchQuery, inventory]);
 
   useEffect(() => {
     // Fetch data from Firestore
@@ -167,7 +181,31 @@ export default function Home() {
       <div
         className="pt-10 h-screen max-w-7xl flex grow flex-col "
       >
+        {/* header */}
+        <div
+          className="flex justify-center"
+        >
+          <h1
+            className="text-7xl font-extrabold mb-4"
+          >Inventory Tracker</h1>
+        </div>
         
+        {/* Search form */}
+        <div
+          className="flex flex-col justify-center items-center py-4"
+        >
+          <h1
+            className="text-3xl font-bold mb-4"
+          >Search</h1>
+          <input
+            className="p-2 rounded-md text-black dark:text-white"
+            type="text"
+            placeholder="Search by name"
+            name="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
         {/* form */}
         <div
           className="flex flex-col justify-center items-center py-4"
@@ -245,12 +283,12 @@ export default function Home() {
                 <thead>
                   <tr className="text-left align-baseline">
                     {/* <th>OwnerID</th> */}
-                    <th
+                    {/* <th
                       className="sticky left-0 z-10 pr-4 py-2"
-                    >Owner Name</th>
+                    >Owner Name</th> */}
                     <th
-                      className="sticky left-0 z-10 pr-4 py-2"
-                    >Name</th>
+                      className="sticky left-0 z-10 pl-4 pr-4 py-2"
+                    >Item Name</th>
                     <th
                       className="sticky left-0 z-10 pr-4 py-2"
                     >Quantity</th>
@@ -267,17 +305,17 @@ export default function Home() {
                 </thead>
 
                 <tbody>
-                  {inventory.filter((item) => item.ownerId === user?.uid).map((item) => (
+                  {tableData.filter((item) => item.ownerId === user?.uid).map((item) => (
                     <tr
                       key={item.name}
                       className="text-left align-baseline"
                     >
                       {/* <td>{item.ownerId}</td> */}
-                      <td
+                      {/* <td
                         className="sticky left-0 z-10 pr-4 py-2"
-                      >{item.ownerName}</td>
+                      >{item.ownerName}</td> */}
                       <td
-                        className="sticky left-0 z-10 pr-4 py-2"
+                        className="sticky left-0 z-10 pl-4 pr-4 py-2"
                       >
                         {isUpdating && item.id === itemUpdating?.id ? (
                           <input
